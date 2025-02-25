@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Pagination from "@/app/ui/invoices/pagination";
 import Search from "@/app/ui/search";
 import Table from "@/app/ui/invoices/table";
@@ -7,16 +8,19 @@ import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchFilteredInvoices } from "@/app/lib/data";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) {
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
+export const metadata: Metadata = {
+  title: "Invoices",
+};
+
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const query =
+    typeof searchParams.query === "string" ? searchParams.query : "";
+  const currentPage =
+    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
 
   return (
     <div className="w-full">

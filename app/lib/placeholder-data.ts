@@ -144,4 +144,12 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-module.exports = { users, customers, invoices, revenue };
+// 添加类型定义
+type User = typeof users[0];
+type Customer = typeof customers[0];
+type Invoice = typeof invoices[0];
+type Revenue = typeof revenue[0];
+
+// 使用 export 语法
+export { users, customers, invoices, revenue };
+export type { User, Customer, Invoice, Revenue };

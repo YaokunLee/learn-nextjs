@@ -13,14 +13,24 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  params?: Promise<any>;
+  searchParams?: Promise<any>;
 }
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({
+  searchParams = Promise.resolve({}),
+}: PageProps) {
+  const resolvedSearchParams = await searchParams;
+
   const query =
-    typeof searchParams.query === "string" ? searchParams.query : "";
+    typeof resolvedSearchParams.query === "string"
+      ? resolvedSearchParams.query
+      : "";
+
   const currentPage =
-    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
+    typeof resolvedSearchParams.page === "string"
+      ? Number(resolvedSearchParams.page)
+      : 1;
 
   return (
     <div className="w-full">
